@@ -1,0 +1,31 @@
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="utf-8">
+      <title></title>
+        {% load staticfiles %}
+      <!-- The line above tells Django to be ready to listen for static files -->
+      <link rel="stylesheet" href="{% static 'ourApp/css/main.css' %}"media="screen" title="no title"  charset="utf-8">
+      </head>
+    <body>
+        {{request.session.testSession}}
+    
+    <div class="line">{{testKey}}</div>
+    
+    <form action="/process" method="post">
+        {% csrf_token %}
+        <input type="text" name="name">
+        <select name="location">
+            <option value="seattle">Seattle</option>
+            <option value="sanfran">San Fran</option>
+        </select>
+        <select name="language">
+            <option value="python">Python</option>
+            <option value="javascript">JavaScript</option>
+        </select>
+        <textarea name="comments" rows="10" cols="50">Comments</textarea>        
+        <input type="submit" value="submit">
+    </form>
+
+    </body>
+  </html>
