@@ -2,7 +2,12 @@ from django import forms
 #from .models import Users
 
 from django.contrib.auth.models import User
+
+# import UserCreationForm from django
 from django.contrib.auth.forms import UserCreationForm
+
+# import Message from .models file
+from .models import Message
 
 class UserCreateForm(UserCreationForm):
     # Validations, required fields
@@ -24,6 +29,19 @@ class UserCreateForm(UserCreationForm):
             user.save()
         return user
 
+# class for message form, pulls from message model
+class MessageCreateForm(forms.Form):
+    message = forms.CharField(widget=forms.Textarea)
+
+    class Meta:
+        model = Message
+        fields = ("message", "created_at")
+    # create and save message?
+    def save(self, commit=True):
+        messasge = super(MessageCreateForm, self).save(commit=False)
+        message.message = self.cleaned_data["message"]
+
+
 # form notes
 # A Form instance has an is_valid() method
 # returns True or False
@@ -32,6 +50,12 @@ class LoginForm(forms.Form):
     username= forms.CharField(label=
     'username', max_length=45)
     password = forms.CharField(max_length=100,widget=forms.PasswordInput)
+
+class messageForm(forms.Form):
+    class Meta:
+        model = Message
+        fields = ("message")
+
 
 # contact me form example
 # class ContactForm(forms.Form):
