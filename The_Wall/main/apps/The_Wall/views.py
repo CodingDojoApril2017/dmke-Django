@@ -43,17 +43,12 @@ def register(request):
     # if request.method == "POST":
     #     bound_form = RegisterForm(request.POST)
 
-
-
-
     # Django models
     ## returns user object or none
     # isUser=authenticate(username=request.POST['username'], password='request.POST['password']')
     ## if isUser proceed with login
 
-
     # form = RegisterForm()
-
 
     # validation of form
 
