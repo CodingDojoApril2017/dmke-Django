@@ -1,0 +1,44 @@
+  <!DOCTYPE html>
+  <html>
+    <head>
+      <meta charset="utf-8">
+      <title></title>
+        {% load staticfiles %}
+      <!-- The line above tells Django to be ready to listen for static files -->
+      <link rel="stylesheet" href="{% static 'ourApp/css/main.css' %}"media="screen" title="no title"  charset="utf-8">
+      </head>
+    <body>
+        {{request.session.testSession}}
+    
+    <div class="line">{{testKey}}</div>
+
+    Your Gold: {{gold}}
+    <form action="/process" method="post">
+        Farm
+        (earns 10-20 golds)
+        <a href="/process/farm">Find Gold!</a>
+    </form>
+
+    <form action="/process" method="post">
+        Cave
+        {% csrf_token %}   
+        <input type="hidden" name="place" value="cave">
+        <input type="submit" value="Find Gold!">
+    </form>
+
+    <form action="/process" method="post">
+        House
+        {% csrf_token %}   
+        <input type="hidden" name="place" value="house">
+        <input type="submit" value="Find Gold!">
+    </form>
+
+    <form action="/process" method="post">
+        Casino
+        {% csrf_token %}   
+        <input type="hidden" name="place" value="casino">
+        <input type="submit" value="Find Gold!">
+    </form>
+
+    </body>
+  </html>
