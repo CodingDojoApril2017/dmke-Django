@@ -2,6 +2,8 @@ from django import forms
 # does import forms grab ModelForm?
 from django.forms import ModelForm
 #from .models import Users
+from django.contrib.sessions.models import Session
+
 
 from django.contrib.auth.models import User
 
@@ -38,11 +40,14 @@ class MessageCreateForm(forms.ModelForm):
     class Meta:
         model = Message
         fields = ('messageText',)
+        
     # create and save message?
 
-    # def save(self, commit=True):
-    #     message = super(MessageCreateForm, self).save(commit=False)
-    #     message.message = self.cleaned_data["message"]
+    def save(self, commit=True):
+        messageText = super(MessageCreateForm, self).save(commit=False)
+        Message.messageText = self.cleaned_data["messageText"]
+        print Message.user
+        Message.user = self.cleaned_data["user_id"]
 
 
 # form notes

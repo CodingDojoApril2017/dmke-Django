@@ -62,8 +62,16 @@ def messageR(request):
     newMessage = MessageCreateForm(request.POST)
     # validation of form
     if newMessage.is_valid():
+        
+        newMessage.user_id = request.user.id
+        print "got to here!"
+        print request.user.id
+        print newMessage.user_id
         # call .save method to store in model
+        print newMessage.cleaned_data
         saveMessage = newMessage.save(commit=False)
+        print saveMessage
+        saveMessage.user = request.user.id
         saveMessage.save()
     return redirect('/wall')
 
