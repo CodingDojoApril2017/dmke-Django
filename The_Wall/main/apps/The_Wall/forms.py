@@ -33,16 +33,16 @@ class UserCreateForm(UserCreationForm):
         return user
 
 # class for message form, pulls from message model
-class MessageCreateForm(forms.Form):
-    message = forms.CharField(widget=forms.Textarea)
-
+class MessageCreateForm(forms.ModelForm):
+    messageText = forms.CharField(widget=forms.Textarea)
     class Meta:
         model = Message
-        fields = ("message", "created_at")
+        fields = ('messageText',)
     # create and save message?
-    def save(self, commit=True):
-        messasge = super(MessageCreateForm, self).save(commit=False)
-        message.message = self.cleaned_data["message"]
+
+    # def save(self, commit=True):
+    #     message = super(MessageCreateForm, self).save(commit=False)
+    #     message.message = self.cleaned_data["message"]
 
 
 # form notes
@@ -55,7 +55,7 @@ class LoginForm(forms.Form):
     password = forms.CharField(max_length=100,widget=forms.PasswordInput)
 
 class MessageForm(forms.Form):
-    message = forms.CharField(widget=forms.Textarea)
+    messageText = forms.CharField(widget=forms.Textarea)
 
 
 # contact me form example

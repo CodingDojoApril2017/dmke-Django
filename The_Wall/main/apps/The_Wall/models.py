@@ -14,8 +14,8 @@ def validateLengthGreaterThanTwo(value):
 
 # Create your models here.
 class Message(models.Model):
-    user_id = models.ForeignKey(User)
-    message = models.TextField()
+    user = models.ForeignKey(User)
+    messageText = models.TextField()
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
 
@@ -23,10 +23,11 @@ class Message(models.Model):
 class MessageForm(ModelForm):
     class Meta:
         model = Message
-        fields = ['message']
+        fields = ['messageText']
+        exclude = ['user']
 
 class Comments(models.Model):
-    user_id = models.ForeignKey(User)
+    user = models.ForeignKey(User)
     message_id = models.ForeignKey(Message)
     comment = models.TextField()
     created_at = models.DateTimeField(auto_now_add = True)

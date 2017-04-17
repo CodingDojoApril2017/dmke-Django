@@ -2,7 +2,8 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect
-from django.contrib.auth import authenticate, login
+from django.contrib.auth import authenticate, login as auth_login
+from django.contrib.auth.forms import UserCreationForm
 
 from .forms import UserCreateForm, LoginForm, MessageCreateForm, MessageForm
 
@@ -12,6 +13,7 @@ from .forms import UserCreateForm, LoginForm, MessageCreateForm, MessageForm
 # Import Django's prebuilt Users model
 from django.contrib.auth.models import User
 # User: username, password, email, first_name, last_name
+from .models import Message
 
 # Create your views here.
 def index(request):
@@ -23,43 +25,46 @@ def index(request):
 
 def register(request):
 
-    newUser = UserCreateForm(request.POST)
+    # pull down request.POST form data passed from client
+    newUser = UserCreationForm(request.POST)
+    print newUser
     # validation of form
     if newUser.is_valid():
-        # creation of user/registration
+        # call .save method to store in model
         user = newUser.save(commit=False)
         user.save()
-
-    return redirect('/wall')
+        return redirect('/wall')
+    else:
+        return redirect('/')
 
 def login(request):
     authUser=authenticate(username=request.POST['username'], password=request.POST['password'])
-    # if request.method == 'POST':
-        ##create a form instance with POST data
-        ## binds data to form, form is now 'binded'
-        # form = LoginForm(request.POST)
-        ##check for validity
-        # if form.is_valid():
-            # process the data in form.cleaned_data
-            # return redirect('/The_Wall/wall.html')
-    # else:
-        ## creates blank form
-        #for =LoginForm()
-    ## renders index.html with form context
-    # return render(request, 'index.html', {'form': form})
+    if authUser:
+        auth_login(request, authUser)
+    else:
+        return redirect('/')
     return redirect('/wall')
 
 def wall(request):
-    #context = {}
-    # Request message and comment data and send to client/display on the wall
-
-    # 1. render message form
     messageForm = MessageForm()
+    # 2. render messages
 
-    return render(request, 'The_Wall/wall.html', {"messageForm":messageForm})
+    messageBoard = Message.objects.all()
 
-def message(request):
-    # Add message to database using models
+    context = {
+        "messageForm": messageForm,
+        "messageBoard": messageBoard
+    }
+
+    return render(request, 'The_Wall/wall.html', context)
+
+def messageR(request):
+    newMessage = MessageCreateForm(request.POST)
+    # validation of form
+    if newMessage.is_valid():
+        # call .save method to store in model
+        saveMessage = newMessage.save(commit=False)
+        saveMessage.save()
     return redirect('/wall')
 
 def comment(request):
