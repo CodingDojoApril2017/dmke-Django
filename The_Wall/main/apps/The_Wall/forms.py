@@ -12,6 +12,7 @@ from django.contrib.auth.forms import UserCreationForm
 from .models import Message
 
 # Unique case for model/form due to inclusion and use of Django defined 'User'
+# Taking a look at user and auth again, refactor test and branch test
 class UserCreateForm(UserCreationForm):
     # Validations, required fields
     email = forms.EmailField(required=True)
