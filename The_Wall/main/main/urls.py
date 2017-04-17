@@ -18,6 +18,5 @@ from django.contrib import admin
 
 urlpatterns = [
     url(r'^', include('apps.The_Wall.urls')),
-    
 ]
 

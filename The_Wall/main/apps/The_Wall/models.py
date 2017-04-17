@@ -3,6 +3,7 @@ from __future__ import unicode_literals
 
 from django.db import models
 from django.contrib.auth.models import User
+from django.forms import ModelForm
 
 # Model functions
 def validateLengthGreaterThanTwo(value):
@@ -17,6 +18,12 @@ class Message(models.Model):
     message = models.TextField()
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
+
+# MessageForm class based on Message model
+class MessageForm(ModelForm):
+    class Meta:
+        model = Message
+        fields = ['message']
 
 class Comments(models.Model):
     user_id = models.ForeignKey(User)

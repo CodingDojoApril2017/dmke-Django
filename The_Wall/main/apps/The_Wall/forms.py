@@ -1,4 +1,6 @@
 from django import forms
+# does import forms grab ModelForm?
+from django.forms import ModelForm
 #from .models import Users
 
 from django.contrib.auth.models import User
@@ -9,6 +11,7 @@ from django.contrib.auth.forms import UserCreationForm
 # import Message from .models file
 from .models import Message
 
+# Unique case for model/form due to inclusion and use of Django defined 'User'
 class UserCreateForm(UserCreationForm):
     # Validations, required fields
     email = forms.EmailField(required=True)
@@ -51,10 +54,8 @@ class LoginForm(forms.Form):
     'username', max_length=45)
     password = forms.CharField(max_length=100,widget=forms.PasswordInput)
 
-class messageForm(forms.Form):
-    class Meta:
-        model = Message
-        fields = ("message")
+class MessageForm(forms.Form):
+    message = forms.CharField(widget=forms.Textarea)
 
 
 # contact me form example

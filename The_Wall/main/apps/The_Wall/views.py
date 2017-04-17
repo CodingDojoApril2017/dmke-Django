@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 
-from .forms import UserCreateForm, LoginForm, MessageCreateForm
+from .forms import UserCreateForm, LoginForm, MessageCreateForm, MessageForm
 
 ## Imports Users class/object from models file
 # from .models import Users
@@ -15,55 +15,15 @@ from django.contrib.auth.models import User
 
 # Create your views here.
 def index(request):
-    # login / register page
-
-    # query to Users, objects.login method passing in POST DATA 
-    # query example (getter):
-    # user = User.objects.get(id=6)
-    # context = {"users": user}
-
-    # testuser = authenticate(username=request.POST['username'], password='request.POST['password']')
-
-    # user = Users.objects.login( POST DATA)
-    # if 'error in user:
-    #   pass
-    # if 'theuser' in user:
-    #   pass
-
-    # Create form from forms class, pass to index through context
-    # form = RegisterForm()
-    # context = { "regForm": form}
 
     loginForm = LoginForm()
     registerForm = UserCreateForm()
 
-
     return render(request, 'The_Wall/index.html', {"registerForm":registerForm, "loginForm":loginForm})
 
-# Extra notes:
-# .filter returns a queryset list
-# .exclude, ooposite of filter
-#  conditions: __startswith="S", __contains="E"
-# queries can be changed
-# same query can accept multiple arguments
-# | or can be used
-
 def register(request):
-    ## Check for POST and bind form
-    # if request.method == "POST":
-    #     bound_form = RegisterForm(request.POST)
-
-    # Django models
-    ## returns user object or none
-    # isUser=authenticate(username=request.POST['username'], password='request.POST['password']')
-    ## if isUser proceed with login
-
-    # form = RegisterForm()
-
-    # validation of form
 
     newUser = UserCreateForm(request.POST)
-
     # validation of form
     if newUser.is_valid():
         # creation of user/registration
@@ -74,7 +34,6 @@ def register(request):
 
 def login(request):
     authUser=authenticate(username=request.POST['username'], password=request.POST['password'])
-    ##Django models to query user/email
     # if request.method == 'POST':
         ##create a form instance with POST data
         ## binds data to form, form is now 'binded'
@@ -93,7 +52,11 @@ def login(request):
 def wall(request):
     #context = {}
     # Request message and comment data and send to client/display on the wall
-    return render(request, 'The_Wall/wall.html')
+
+    # 1. render message form
+    messageForm = MessageForm()
+
+    return render(request, 'The_Wall/wall.html', {"messageForm":messageForm})
 
 def message(request):
     # Add message to database using models
@@ -102,9 +65,6 @@ def message(request):
 def comment(request):
     # add id to arguments
     # / message id 
-
-    # query Message object for id
-    # comment = Message.objects.get(id=id)
 
     # add comment to comment model
     # Comment.objects.create(comment=request.POST['comment'],message=message)
@@ -115,4 +75,12 @@ def comment(request):
 # 1. Get a hod of it in the view (fetch from DB, ie.)
 #2. pass it to the template context (data structure)
 #3. expand it to HTML markup using template variables
+
+# Extra notes:
+# .filter returns a queryset list
+# .exclude, ooposite of filter
+#  conditions: __startswith="S", __contains="E"
+# queries can be changed
+# same query can accept multiple arguments
+# | or can be used
 
