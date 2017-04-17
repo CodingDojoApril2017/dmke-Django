@@ -4,10 +4,14 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 
-from .forms import RegisterForm
+from .forms import UserCreateForm
 
-# Imports Users class/object from models file
-from .models import Users
+## Imports Users class/object from models file
+# from .models import Users
+
+# Import Django's prebuilt Users model
+from django.contrib.auth.models import User
+# User: username, password, email, first_name, last_name
 
 # Create your views here.
 def index(request):
@@ -18,6 +22,8 @@ def index(request):
     # user = User.objects.get(id=6)
     # context = {"users": user}
 
+    # testuser = authenticate(username=request.POST['username'], password='request.POST['password']')
+
     # user = Users.objects.login( POST DATA)
     # if 'error in user:
     #   pass
@@ -25,10 +31,16 @@ def index(request):
     #   pass
 
     # Create form from forms class, pass to index through context
-    form = RegisterForm()
-    context = { "regForm": form}
+    # form = RegisterForm()
+    # context = { "regForm": form}
 
-    return render(request, 'The_Wall/index.html', context)
+    form = UserCreateForm()
+    form2 = UserCreateForm(request.POST)
+    if form2.is_valid():
+        user = form2.save(commit=False)
+        user.save()
+
+    return render(request, 'The_Wall/index.html', {"form":form})
 
 # Extra notes:
 # .filter returns a queryset list

@@ -27,6 +27,7 @@ class UsersManager(models.Manager):
 
 # ORM is like a linkedlist!
 
+# deprecate, using Django built-in 'User'
 class Users(models.Model):
     #    first_name = models.CharField(max_length=255, validators = [validateLengthGreaterThanTwo])
     first_name = models.CharField(max_length=255)
