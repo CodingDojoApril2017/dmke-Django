@@ -1,4 +1,5 @@
 from django import forms
+from .models import Users
 
 # form notes
 # A Form instance has an is_valid() method
@@ -7,19 +8,25 @@ from django import forms
 class LoginForm(forms.Form):
     email = forms.CharField(label=
     'email', max_length=45)
+    password = forms.CharField(max_length=100,widget=forms.PasswordInput)
 
 # contact me form example
-class ContactForm(forms.Form):
-    subject = forms.CharField(max_length=100)
-    message = forms.CharField(widget=forms.Textarea)
-    sender = forms.EmailField()
+# class ContactForm(forms.Form):
+#     subject = forms.CharField(max_length=100)
+#     message = forms.CharField(widget=forms.Textarea)
+#     sender = forms.EmailField()
 
-class RegisterForm(forms.Form):
-    first_name = forms.CharField(max_length=45)
-    last_name = forms.CharField(max_length=45)
-    email = forms.EmailField()
-    password = forms.CharField(max_length=100, widget=forms.PasswordInput)
-    confirm_password = forms.CharField(max_length=100,widget=forms.PasswordInput)
+class RegisterForm(forms.ModelForm):
+    # create form from model ...
+    class Meta:
+        model = Users
+        fields = '__all__'
+
+    # first_name = forms.CharField(max_length=45)
+    # last_name = forms.CharField(max_length=45)
+    # email = forms.EmailField()
+    # password = forms.CharField(max_length=100, widget=forms.PasswordInput)
+    # confirm_password = forms.CharField(max_length=100,widget=forms.PasswordInput)
 
 
 # in views.py, form data is sent back to Django site (generally) using the same view which published the form.

@@ -9,9 +9,10 @@
       </head>
     <body>
 
-        <form action="/login" method="post">
+        <!--  displays registration form-->
+        <form action="/register" method="post">
             {% csrf_token %}
-            {{ form }}
+            {{ regForm.as_p }}
             <input type="submit" value="login"/>
         </form>
 

@@ -2,6 +2,9 @@
 from __future__ import unicode_literals
 
 from django.shortcuts import render, redirect
+from django.contrib.auth import authenticate, login
+
+from .forms import RegisterForm
 
 # Imports Users class/object from models file
 from .models import Users
@@ -21,7 +24,11 @@ def index(request):
     # if 'theuser' in user:
     #   pass
 
-    return render(request, 'The_Wall/index.html')
+    # Create form from forms class, pass to index through context
+    form = RegisterForm()
+    context = { "regForm": form}
+
+    return render(request, 'The_Wall/index.html', context)
 
 # Extra notes:
 # .filter returns a queryset list
@@ -32,19 +39,41 @@ def index(request):
 # | or can be used
 
 def register(request):
+    ## Check for POST and bind form
+    # if request.method == "POST":
+    #     bound_form = RegisterForm(request.POST)
+
+
+
 
     # Django models
-    query = "Select * FROM users WHERE email = :email;"
+    ## returns user object or none
+    # isUser=authenticate(username=request.POST['username'], password='request.POST['password']')
+    ## if isUser proceed with login
+
+
+    # form = RegisterForm()
+
 
     # validation of form
 
     return redirect('The_Wall/wall.html')
 
 def login(request):
-    # Django models to query user/email
-
-    # validate password from form/POST
-
+    ##Django models to query user/email
+    # if request.method == 'POST':
+        ##create a form instance with POST data
+        ## binds data to form, form is now 'binded'
+        # form = LoginForm(request.POST)
+        ##check for validity
+        # if form.is_valid():
+            # process the data in form.cleaned_data
+            # return redirect('/The_Wall/wall.html')
+    # else:
+        ## creates blank form
+        #for =LoginForm()
+    ## renders index.html with form context
+    # return render(request, 'index.html', {'form': form})
     return redirect('/')
 
 def wall(request):
@@ -69,4 +98,10 @@ def comment(request):
     # add comment to comment model
     # Comment.objects.create(comment=request.POST['comment'],message=message)
     return redirect('The_Wall/wall.html')
+
+# Some Django notes
+# ... When rendering an object in Django:
+# 1. Get a hod of it in the view (fetch from DB, ie.)
+#2. pass it to the template context (data structure)
+#3. expand it to HTML markup using template variables
 
