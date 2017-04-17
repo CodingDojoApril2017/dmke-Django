@@ -15,6 +15,7 @@ class UserCreateForm(UserCreationForm):
         fields = ("username", "email", "password1", "password2")
 
     def save(self, commit=True):
+        # create and save user
         user = super(UserCreateForm, self).save(commit=False)
         user.email = self.cleaned_data["email"]
         user.first_name = self.cleaned_data["first_name"]
@@ -22,13 +23,14 @@ class UserCreateForm(UserCreationForm):
         if commit:
             user.save()
         return user
+
 # form notes
 # A Form instance has an is_valid() method
 # returns True or False
 # form's data is placed in cleaned_data attribute
 class LoginForm(forms.Form):
-    email = forms.CharField(label=
-    'email', max_length=45)
+    username= forms.CharField(label=
+    'username', max_length=45)
     password = forms.CharField(max_length=100,widget=forms.PasswordInput)
 
 # contact me form example

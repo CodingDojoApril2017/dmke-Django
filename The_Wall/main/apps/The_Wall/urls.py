@@ -4,4 +4,5 @@ urlpatterns = [
     url(r'^$', views.index),
     url(r'^register', views.register),
     url(r'^wall', views.wall),
+    url(r'^login', views.login),
 ]

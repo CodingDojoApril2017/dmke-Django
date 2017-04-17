@@ -4,7 +4,7 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login
 
-from .forms import UserCreateForm
+from .forms import UserCreateForm, LoginForm
 
 ## Imports Users class/object from models file
 # from .models import Users
@@ -34,13 +34,11 @@ def index(request):
     # form = RegisterForm()
     # context = { "regForm": form}
 
-    form = UserCreateForm()
-    form2 = UserCreateForm(request.POST)
-    if form2.is_valid():
-        user = form2.save(commit=False)
-        user.save()
+    loginForm = LoginForm()
+    registerForm = UserCreateForm()
 
-    return render(request, 'The_Wall/index.html', {"form":form})
+
+    return render(request, 'The_Wall/index.html', {"registerForm":registerForm, "loginForm":loginForm})
 
 # Extra notes:
 # .filter returns a queryset list
@@ -64,9 +62,18 @@ def register(request):
 
     # validation of form
 
+    newUser = UserCreateForm(request.POST)
+
+    # validation of form
+    if newUser.is_valid():
+        # creation of user/registration
+        user = newUser.save(commit=False)
+        user.save()
+
     return redirect('/wall')
 
 def login(request):
+    authUser=authenticate(username=request.POST['username'], password=request.POST['password'])
     ##Django models to query user/email
     # if request.method == 'POST':
         ##create a form instance with POST data
@@ -81,7 +88,7 @@ def login(request):
         #for =LoginForm()
     ## renders index.html with form context
     # return render(request, 'index.html', {'form': form})
-    return redirect('/')
+    return redirect('/wall')
 
 def wall(request):
     #context = {}
