@@ -57,7 +57,7 @@ def register(request):
 
     # validation of form
 
-    return redirect('The_Wall/wall.html')
+    return redirect('/wall')
 
 def login(request):
     ##Django models to query user/email
@@ -77,16 +77,13 @@ def login(request):
     return redirect('/')
 
 def wall(request):
-    context = {
-
-    }
+    #context = {}
     # Request message and comment data and send to client/display on the wall
-
-    return render('The_Wall/wall.html', context)
+    return render(request, 'The_Wall/wall.html')
 
 def message(request):
     # Add message to database using models
-    return redirect('The_Wall/wall.html')
+    return redirect('/wall')
 
 def comment(request):
     # add id to arguments
@@ -97,7 +94,7 @@ def comment(request):
 
     # add comment to comment model
     # Comment.objects.create(comment=request.POST['comment'],message=message)
-    return redirect('The_Wall/wall.html')
+    return redirect('/wall')
 
 # Some Django notes
 # ... When rendering an object in Django:
