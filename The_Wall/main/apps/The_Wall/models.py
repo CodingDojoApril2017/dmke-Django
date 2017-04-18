@@ -1,34 +1,26 @@
 # -*- coding: utf-8 -*-
 from __future__ import unicode_literals
-
 from django.db import models
 from django.contrib.auth.models import User
 from django.forms import ModelForm
 
-# Model functions
-def validateLengthGreaterThanTwo(value):
-    if len(value) < 3:
-        raise ValidationError(
-            '{} must be longer than: 2'.format(value)
-        )
+# Models ---
 
-# Create your models here.
+# Class to describe Message model
 class Message(models.Model):
     user = models.ForeignKey(User)
     messageText = models.TextField()
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
 
-# NoSQL quick data dumping
-# SQL retrievals
-
-# MessageForm class based on Message model
+# Class to describe MessageForm object, related to Message model
 class MessageForm(ModelForm):
     class Meta:
         model = Message
         fields = ['messageText']
         exclude = ['user']
 
+# Class to describe Comment model
 class Comment(models.Model):
     user = models.ForeignKey(User)
     message = models.ForeignKey(Message)
@@ -36,12 +28,22 @@ class Comment(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
 
+# Class to describe CommentForm object, related to Comment model
 class CommentForm(ModelForm):
     class Meta:
         model = Comment
         fields = ['commentText']
         exclude = ['user'], ['message']
     
+
+
+
+# Deprecated due to built-in Django stuff
+# def validateLengthGreaterThanTwo(value):
+#     if len(value) < 3:
+#         raise ValidationError(
+#             '{} must be longer than: 2'.format(value)
+#         )
 
 # Deprecated notes
 # ----
@@ -78,5 +80,7 @@ class CommentForm(ModelForm):
 #     def __str__(self):
 #         return self.first_name + " " + self.last_name
 
+# NoSQL quick data dumping
+# SQL retrievals
 
     
