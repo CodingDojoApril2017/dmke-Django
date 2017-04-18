@@ -13,12 +13,11 @@ class UserCreateForm(UserCreationForm):
     email = forms.EmailField(required=True)
     first_name = forms.CharField(max_length=30,required=True)
     last_name = forms.CharField(max_length=30,required=True)
-    
     # TODO__ look at what Meta tag is exactly
     class Meta:
         model = User
         fields = ("username", "email", "password1", "password2")
-    
+
     # modified save method
     # TODO__ understand cleaned_data more
     # Also, thorough understanding of data flow with self and save method
@@ -36,11 +35,9 @@ class UserCreateForm(UserCreationForm):
 # TODO__ Read into ModelForm for more understanding
 class MessageCreateForm(forms.ModelForm):
     messageText = forms.CharField(widget=forms.Textarea)
-
     class Meta:
         model = Message
         fields = ('messageText',)
-
     def save(self, id, commit=True):
         messageR = super(MessageCreateForm, self).save(commit=False)
         messageR.messageText = self.cleaned_data["messageText"]
@@ -52,11 +49,9 @@ class MessageCreateForm(forms.ModelForm):
 # Class to describe a new Comment form based on Comment model
 class CommentCreateForm(forms.ModelForm):
     commentText = forms.CharField(widget=forms.Textarea)
-
     class Meta:
         model = Comment
         fields = ('commentText',)
-
     def save(self, id, id2, commit=True):
         commentR = super(CommentCreateForm, self).save(commit=False)
         commentR.messageText = self.cleaned_data["commentText"]

@@ -14,9 +14,7 @@
             {{ messageForm.as_p }}
             <input type="submit" value="Post Message"/>
         </form>     
-
         {% for msg in messageBoard%}
-        
         {{msg.messageText}}
                 {% for comments in commentBoard %}  
                     {% if comments.message_id == msg.id %}

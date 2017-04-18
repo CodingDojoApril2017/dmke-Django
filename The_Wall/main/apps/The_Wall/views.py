@@ -3,15 +3,12 @@ from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.forms import UserCreationForm
-
 # Import forms and models
 from .forms import UserCreateForm, LoginForm, MessageCreateForm, MessageForm, CommentCreateForm, CommentForm
 from .models import Message, Comment
-
 # Import Django's prebuilt Users model
 from django.contrib.auth.models import User
 # User: username, password, email, first_name, last_name
-
 
 # Views ---
 
@@ -19,14 +16,12 @@ from django.contrib.auth.models import User
 def index(request):
     loginForm = LoginForm()
     registerForm = UserCreateForm()
-
     return render(request, 'The_Wall/index.html', {"registerForm":registerForm, "loginForm":loginForm})
 
 # Register route, receives POST form data passed from client through UserCreateForm object
 # Saves new User object in database
 def register(request):
     newUser = UserCreationForm(request.POST)
-
     if newUser.is_valid():
         user = newUser.save(commit=False)
         user.save()
@@ -38,7 +33,6 @@ def register(request):
 # TODO__ Add error message on unauthorized
 def login(request):
     authUser=authenticate(username=request.POST['username'], password=request.POST['password'])
-
     if authUser:
         auth_login(request, authUser)
     else:
@@ -53,25 +47,21 @@ def wall(request):
     commentForm = CommentForm()
     messageBoard = Message.objects.all()
     commentBoard = Comment.objects.all()
-
     context = {
         "messageForm": messageForm,
         "messageBoard": messageBoard,
         "commentForm": commentForm,
         "commentBoard": commentBoard
     }
-
     return render(request, 'The_Wall/wall.html', context)
 
 # MessageR route, receives POST form data from client through MessageCreateForm object
 # Saves new Message object in database
 def messageR(request):
     newMessage = MessageCreateForm(request.POST)
-
     if newMessage.is_valid():
         saveMessage = newMessage.save(request.user.id, commit=False)
         saveMessage.save()
-
     return redirect('/wall')
 
 # CommentR route, receives POST form data from client through CommentCreateForm object
@@ -79,11 +69,9 @@ def messageR(request):
 def commentR(request):
     newComment = CommentCreateForm(request.POST)
     msg_id = request.POST['msgid']
-
     if newComment.is_valid():
         saveComment = newComment.save(request.user.id, msg_id, commit=False)
         saveComment.save()
-
     return redirect('/wall')
 
 # Some Django notes
