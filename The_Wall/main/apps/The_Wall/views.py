@@ -64,7 +64,6 @@ def messageR(request):
     if newMessage.is_valid():
         # call .save method to store in model
         saveMessage = newMessage.save(request.user.id, commit=False)
-        print saveMessage
         saveMessage.save()
     return redirect('/wall')
 

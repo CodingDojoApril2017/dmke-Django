@@ -14,5 +14,13 @@
             {{ messageForm.as_p }}
             <input type="submit" value="Post Message"/>
         </form>     
+
+        {% for msg in messageBoard%}
+        <table>
+        <tr><th>{{msg.messageText}}</th></tr>
+
+        </table>
+        {% endfor %}
+
     </body>
   </html>
