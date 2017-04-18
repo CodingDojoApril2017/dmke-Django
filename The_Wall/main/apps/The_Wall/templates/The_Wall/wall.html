@@ -16,8 +16,19 @@
         </form>     
 
         {% for msg in messageBoard%}
-        <table>
-        <tr><th>{{msg.messageText}}</th></tr>
+        
+        {{msg.messageText}}
+                {% for comments in commentBoard %}  
+                    {% if comments.message_id == msg.id %}
+                    {{ comments.commentText }}
+                    {% endif %}     
+                {% endfor %}     
+        <form action="/commentR" method="post">
+            {% csrf_token %}
+            {{ commentForm.as_p }}
+        <input type="hidden" value={{msg.id}} name="msgid"/>
+        <input type="submit" value="Post Comment"/>
+        </form>  
 
         </table>
         {% endfor %}

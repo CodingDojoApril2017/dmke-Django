@@ -5,7 +5,7 @@ from django.shortcuts import render, redirect
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.forms import UserCreationForm
 
-from .forms import UserCreateForm, LoginForm, MessageCreateForm, MessageForm
+from .forms import UserCreateForm, LoginForm, MessageCreateForm, MessageForm, CommentCreateForm, CommentForm
 
 ## Imports Users class/object from models file
 # from .models import Users
@@ -13,7 +13,7 @@ from .forms import UserCreateForm, LoginForm, MessageCreateForm, MessageForm
 # Import Django's prebuilt Users model
 from django.contrib.auth.models import User
 # User: username, password, email, first_name, last_name
-from .models import Message
+from .models import Message, Comment
 
 # Create your views here.
 def index(request):
@@ -48,12 +48,15 @@ def login(request):
 def wall(request):
     messageForm = MessageForm()
     # 2. render messages
-
+    commentForm = CommentForm()
     messageBoard = Message.objects.all()
+    commentBoard = Comment.objects.all()
 
     context = {
         "messageForm": messageForm,
-        "messageBoard": messageBoard
+        "messageBoard": messageBoard,
+        "commentForm": commentForm,
+        "commentBoard": commentBoard
     }
 
     return render(request, 'The_Wall/wall.html', context)
@@ -67,9 +70,17 @@ def messageR(request):
         saveMessage.save()
     return redirect('/wall')
 
-def comment(request):
+def commentR(request):
     # add id to arguments
     # / message id 
+    newComment = CommentCreateForm(request.POST)
+    print request.POST['msgid']
+    msg_id = request.POST['msgid']
+    # validation of form
+    if newComment.is_valid():
+        # call .save method to store in model
+        saveComment = newComment.save(request.user.id, msg_id, commit=False)
+        saveComment.save()
 
     # add comment to comment model
     # Comment.objects.create(comment=request.POST['comment'],message=message)

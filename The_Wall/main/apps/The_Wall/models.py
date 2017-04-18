@@ -29,12 +29,18 @@ class MessageForm(ModelForm):
         fields = ['messageText']
         exclude = ['user']
 
-class Comments(models.Model):
+class Comment(models.Model):
     user = models.ForeignKey(User)
-    message_id = models.ForeignKey(Message)
-    comment = models.TextField()
+    message = models.ForeignKey(Message)
+    commentText = models.TextField()
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
+
+class CommentForm(ModelForm):
+    class Meta:
+        model = Comment
+        fields = ['commentText']
+        exclude = ['user'], ['message']
     
 
 # Deprecated notes

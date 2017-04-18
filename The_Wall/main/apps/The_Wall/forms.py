@@ -9,7 +9,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 
 # import Message from .models file
-from .models import Message
+from .models import Message, Comment
 
 # Unique case for model/form due to inclusion and use of Django defined 'User'
 # Taking a look at user and auth again, refactor test and branch test
@@ -50,6 +50,22 @@ class MessageCreateForm(forms.ModelForm):
             messageR.save()
         return messageR
 
+class CommentCreateForm(forms.ModelForm):
+    commentText = forms.CharField(widget=forms.Textarea)
+    class Meta:
+        model = Comment
+        fields = ('commentText',)
+    # create and save message?
+
+    def save(self, id, id2, commit=True):
+        commentR = super(CommentCreateForm, self).save(commit=False)
+        commentR.messageText = self.cleaned_data["commentText"]
+        commentR.user_id = id
+        commentR.message_id = id2
+        if commit:
+            commentR.save()
+        return commentR
+
 # form notes
 # A Form instance has an is_valid() method
 # returns True or False
@@ -62,6 +78,8 @@ class LoginForm(forms.Form):
 class MessageForm(forms.Form):
     messageText = forms.CharField(widget=forms.Textarea)
 
+class CommentForm(forms.Form):
+    commentText = forms.CharField(widget=forms.Textarea)
 
 # contact me form example
 # class ContactForm(forms.Form):

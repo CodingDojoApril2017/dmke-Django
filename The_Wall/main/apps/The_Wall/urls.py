@@ -6,4 +6,5 @@ urlpatterns = [
     url(r'^wall', views.wall),
     url(r'^login', views.login),
     url(r'^messageR', views.messageR),
+    url(r'^commentR', views.commentR),
 ]
