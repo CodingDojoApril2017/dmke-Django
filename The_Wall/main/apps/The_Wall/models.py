@@ -19,6 +19,9 @@ class Message(models.Model):
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
 
+# NoSQL quick data dumping
+# SQL retrievals
+
 # MessageForm class based on Message model
 class MessageForm(ModelForm):
     class Meta:

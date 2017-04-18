@@ -24,6 +24,7 @@ class UserCreateForm(UserCreationForm):
         fields = ("username", "email", "password1", "password2")
 
     def save(self, commit=True):
+        # add id to here
         # create and save user
         user = super(UserCreateForm, self).save(commit=False)
         user.email = self.cleaned_data["email"]
@@ -41,10 +42,13 @@ class MessageCreateForm(forms.ModelForm):
         fields = ('messageText',)
     # create and save message?
 
-    # def save(self, commit=True):
-    #     message = super(MessageCreateForm, self).save(commit=False)
-    #     message.message = self.cleaned_data["message"]
-
+    def save(self, id, commit=True):
+        messageR = super(MessageCreateForm, self).save(commit=False)
+        messageR.messageText = self.cleaned_data["messageText"]
+        messageR.user_id = id
+        if commit:
+            messageR.save()
+        return messageR
 
 # form notes
 # A Form instance has an is_valid() method
