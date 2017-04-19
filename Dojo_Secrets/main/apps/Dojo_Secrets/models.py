@@ -12,7 +12,15 @@ from django.forms import ModelForm
 #
 class Secret(models.Model):
     userWhoPosted = models.ForeignKey(User)
-    userWhoPosted = models.ManyToManyField(User, related_name="publishers")
+    userWhoLiked = models.ManyToManyField(User, related_name="publishers")
     secretMessage = models.TextField()
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
+
+## Dictionary lookup. Example: foo["bar"]
+## Attribute lookup. Example: foo.bar
+## List-index lookup. Example: foo[bar]
+## 
+
+# Row is a new object
+# Columns are the attributes of each object

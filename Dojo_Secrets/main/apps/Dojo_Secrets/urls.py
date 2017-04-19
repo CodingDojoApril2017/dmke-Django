@@ -5,4 +5,5 @@ urlpatterns = [
     url(r'^renderSecrets', views.renderSecrets),
     url(r'^register', views.register),
     url(r'^login', views.login),
+    url(r'^addSecret', views.addSecret)
 ]

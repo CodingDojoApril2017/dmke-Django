@@ -18,15 +18,14 @@ class UserCreateForm(UserCreationForm):
         model = User
         fields = ("username", "email", "password1","password2")
 
-        def save(self, commit=True):
-            newSecretMessage = super(SecretCreateForm, self).save(commit=False)
-            Secret.save(commit=False)
-            Secret.secretMessage = self.cleaned_data["secretMessage"]
-            newSecretMessage.user_id = id
-            
-            if commit:
-                newSecretMessage.save()
-            return newSecretMessage
+    def save(self, commit=True):
+        user = super(UserCreateForm, self).save(commit=False)
+        user.email = self.cleaned_data["email"]
+        user.first_name = self.cleaned_data["first_name"]
+        user.last_name = self.cleaned_data["last_name"]
+        if commit:
+            user.save()
+        return user
 
 class SecretCreateForm(forms.ModelForm):
     secretMessage = forms.CharField(widget=forms.Textarea)
@@ -34,6 +33,14 @@ class SecretCreateForm(forms.ModelForm):
     class Meta:
         model = Secret
         fields = ('secretMessage',)
+
+    def save(self, id, commit=True):
+        newSecretMessage = super(SecretCreateForm, self).save(commit=False)
+        Secret.secretMessage = self.cleaned_data["secretMessage"]
+        newSecretMessage.userWhoPosted_id = id
+        if commit:
+            newSecretMessage.save()
+        return newSecretMessage
 
 ## Just Forms 
 
