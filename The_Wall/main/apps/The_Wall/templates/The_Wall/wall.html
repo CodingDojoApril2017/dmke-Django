@@ -8,7 +8,6 @@
       <link rel="stylesheet" href="{% static 'ourApp/css/main.css' %}"media="screen" title="no title"  charset="utf-8">
       </head>
     <body>
-
         <form action="/messageR" method="post">
             {% csrf_token %}
             {{ messageForm.as_p }}
@@ -26,10 +25,8 @@
             {{ commentForm.as_p }}
         <input type="hidden" value={{msg.id}} name="msgid"/>
         <input type="submit" value="Post Comment"/>
-        </form>  
-
+        </form> 
         </table>
         {% endfor %}
-
     </body>
   </html>

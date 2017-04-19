@@ -14,11 +14,6 @@ class Message(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
 
 # Class to describe MessageForm object, related to Message model
-class MessageForm(ModelForm):
-    class Meta:
-        model = Message
-        fields = ['messageText']
-        exclude = ['user']
 
 # Class to describe Comment model
 class Comment(models.Model):
@@ -29,15 +24,27 @@ class Comment(models.Model):
     updated_at = models.DateTimeField(auto_now = True)
 
 # Class to describe CommentForm object, related to Comment model
-class CommentForm(ModelForm):
-    class Meta:
-        model = Comment
-        fields = ['commentText']
-        exclude = ['user'], ['message']
+# !Q - shouldn't this be in forms?
     
 
+## !R - self and super in class/methods
 
+# Each model has at least one "Manager" and it's called 'objects' by default.
+# I.E. Comment.objects
+# class Manager - A "Manager" is the interface through which db query operations are provided to Django models
 
+# Adding extra managers is the preferred way to add "table-level" functionality to your models
+# For "row-level" functionality, i.e., functions that on on a single instance of a model object (One 'Comment' object vs all 'Comment' objects) use Model methods
+
+# Method overriding in Python
+# Inheritance + customization
+# Inherit methods from class, override to provide new functionality
+
+# Django uses SQL-lite
+# Use postgresql to scale
+# CRUD - Create Read Update Delete
+
+# clear() to clear object list - Comment.objects.clear() would clear Comment objects
 # Deprecated due to built-in Django stuff
 # def validateLengthGreaterThanTwo(value):
 #     if len(value) < 3:

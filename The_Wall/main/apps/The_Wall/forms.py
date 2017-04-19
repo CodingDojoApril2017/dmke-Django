@@ -9,6 +9,7 @@ from .models import Message, Comment
 
 # Class to describe a new Django User using Django's UserCreationForm, form derived from model
 # TODO__ look into UserCreationForm for more understanding
+# SOLVED: my UserCreateForm class is 'extending' Django's UserCreationForm
 class UserCreateForm(UserCreationForm):
     email = forms.EmailField(required=True)
     first_name = forms.CharField(max_length=30,required=True)
@@ -67,9 +68,16 @@ class LoginForm(forms.Form):
     'username', max_length=45)
     password = forms.CharField(max_length=100,widget=forms.PasswordInput)
 
+
+
 # Class to describe Message form object
 class MessageForm(forms.Form):
     messageText = forms.CharField(widget=forms.Textarea)
+
+    class Meta:
+        model = Message
+        fields = ['messageText']
+        exclude = ['user']
 
 # Class to describe Comment form object
 class CommentForm(forms.Form):
