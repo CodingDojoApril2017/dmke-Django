@@ -17,7 +17,7 @@ class UserCreateForm(UserCreationForm):
     class Meta:
         model = User
         fields = ("username", "email", "password1","password2")
-        
+
         def save(self, commit=True):
             newSecretMessage = super(SecretCreateForm, self).save(commit=False)
             Secret.save(commit=False)
@@ -26,7 +26,6 @@ class UserCreateForm(UserCreationForm):
             
             if commit:
                 newSecretMessage.save()
-
             return newSecretMessage
 
 class SecretCreateForm(forms.ModelForm):
