@@ -37,8 +37,8 @@ class UserCreateForm(UserCreationForm):
 class MessageCreateForm(forms.ModelForm):
     messageText = forms.CharField(widget=forms.Textarea)
     class Meta:
-        model = Message
         fields = ('messageText',)
+        model = Message
     def save(self, id, commit=True):
         messageR = super(MessageCreateForm, self).save(commit=False)
         messageR.messageText = self.cleaned_data["messageText"]

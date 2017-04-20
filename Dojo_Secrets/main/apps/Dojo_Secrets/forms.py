@@ -1,7 +1,7 @@
 from django import forms
 # does import forms grab ModelForm?
 from django.forms import ModelForm
-from .models import Secret
+from .models import Secret, Like
 from django.contrib.auth.forms import UserCreationForm
 from django.contrib.auth.models import User
 # Forms ---
@@ -41,6 +41,21 @@ class SecretCreateForm(forms.ModelForm):
         if commit:
             newSecretMessage.save()
         return newSecretMessage
+        
+class LikeCreateForm(forms.ModelForm):
+
+    class Meta:
+        model = Like
+        fields = ('user','secretMessage',)
+
+    def save(self, secretsID, userID, commit=True):
+        newLike = super(LikeCreateForm, self).save(commit=False)
+        newLike.secretMessage = secretsID
+        newLike.user = userID
+        if commit:
+            newLike.save()
+        return newLike
+
 
 ## Just Forms 
 

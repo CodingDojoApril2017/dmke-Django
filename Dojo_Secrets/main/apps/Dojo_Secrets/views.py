@@ -2,11 +2,12 @@
 from __future__ import unicode_literals
 from django.shortcuts import render, redirect
 from django.forms import ModelForm
-from .forms import UserCreateForm, SecretCreateForm, LoginForm 
+from .forms import UserCreateForm, SecretCreateForm, LikeCreateForm, LoginForm
 from .models import Secret
 # Import authenticate and login to use
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.models import User
+from django.db import connections
 
 ## Views that render HTML pages ---
 
@@ -30,11 +31,13 @@ def renderSecrets(request):
         "allSecrets":allSecrets
     }
     #
-    print allSecrets
     for secrets in allSecrets:
         print secrets.secretMessage
+        print secrets.userWhoLiked
         #print secrets.userWhoPosted
 
+    #testC = connections.queries
+    #print testC
     return render(request, 'Dojo_Secrets/Secret.html', context)
 
 ## Functional views
@@ -46,6 +49,15 @@ def addSecret(request):
     if newSecret.is_valid():
         saveSecret = newSecret.save(request.user.id, commit=False)
         saveSecret.save()
+    return redirect('/renderSecrets')
+
+def like_secrets(request, secrets_id):
+    print "routed to likeSecret"
+    print "secrets id:", secrets_id
+    # Create Like
+    newLike = LikeCreateForm(secrets_id, request.user.id,)
+
+
     return redirect('/renderSecrets')
 
 def register(request):
