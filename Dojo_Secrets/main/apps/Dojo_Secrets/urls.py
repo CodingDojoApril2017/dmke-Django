@@ -9,3 +9,4 @@ urlpatterns = [
    # url(r'^likeSecret', views.likeSecret),
     url(r'^like_secrets/(?P<secrets_id>[0-9]+)$', views.like_secrets, name='like_secrets'),
 ]
+

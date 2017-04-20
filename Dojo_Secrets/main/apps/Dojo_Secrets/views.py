@@ -25,6 +25,7 @@ def renderSecrets(request):
     print "routed to renderSecrets"
     secretFormToRender = SecretCreateForm()
     allSecrets = Secret.objects.all()
+    # allLikes = Like.
 
     context= {
         "secretForm":secretFormToRender,
@@ -85,6 +86,8 @@ def login(request):
     return redirect('/renderSecrets')
 
 
-
-
+# Get an object,
+# getLike = Like.objects.get(pk=1)
+# Change an existing Like
+# form = ArticleForm(instance=article)
 
