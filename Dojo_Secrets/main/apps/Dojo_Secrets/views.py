@@ -7,7 +7,7 @@ from .models import Secret
 # Import authenticate and login to use
 from django.contrib.auth import authenticate, login as auth_login
 from django.contrib.auth.models import User
-from django.db import connections
+from django.db import connection
 
 ## Views that render HTML pages ---
 
@@ -23,6 +23,7 @@ def index(request):
 
 def renderSecrets(request):
     print "routed to renderSecrets"
+    print connection.queries
     secretFormToRender = SecretCreateForm()
     allSecrets = Secret.objects.all()
     # allLikes = Like.
@@ -90,4 +91,3 @@ def login(request):
 # getLike = Like.objects.get(pk=1)
 # Change an existing Like
 # form = ArticleForm(instance=article)
-

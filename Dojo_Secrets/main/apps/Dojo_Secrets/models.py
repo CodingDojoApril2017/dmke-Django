@@ -13,6 +13,8 @@ from django.forms import ModelForm
 class Secret(models.Model):
     userWhoPosted = models.ForeignKey(User)
     userWhoLiked = models.ManyToManyField(User, related_name="likers")
+    # related_name replaces 'message_set' in User.objects.message_set.all()
+    
     secretMessage = models.TextField()
     created_at = models.DateTimeField(auto_now_add = True)
     updated_at = models.DateTimeField(auto_now = True)
