@@ -16,5 +16,9 @@ Including another URLconf
 from django.conf.urls import url, include # Notice we added include
 from django.contrib import admin
 urlpatterns = [
-	url(r'^', include('apps.Login_Reg.urls')), # And now we use include to pull in our first_app.urls...
+    # localhost:8000/ - root route, Login_Reg app in this case
+	url(r'^', include('apps.Login_Reg.urls', namespace='login-reg')),
+    # localhost:8000/books/
+    url(r'^books/', include('apps.Book_Reviews.urls', namespace='book-reviews')),
+     # And now we use include to pull in our first_app.urls...
 ]

@@ -9,31 +9,18 @@
       <!--<script  type='text/javascript' src='javascript/jquery-1.11.1.min.js'>-->
       <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
       <script  type='text/javascript' src='web.js'></script>
-      <link rel="stylesheet" href="{% static 'Login_Reg/css/bootstrap.min.css' %}"media="screen" title="no title"  charset="utf-8">
+      <link rel="stylesheet" href="{% static 'Book_Reviews/css/bootstrap.min.css' %}"media="screen" title="no title"  charset="utf-8">
       </head>
     <body>
 
         <div class ="three">
             <div class="one">
-            <form action="/login" method="post">
+            <form action="{% url 'book-reviews:process_add' %}" method="post">
                 {% csrf_token %}
-                {{ loginForm.as_p }}
-                <input type="submit" value="login"/>
+                {{ bookForm.as_p }}
+                {{ reviewForm.as_p}}
+                <input type="submit" value="Add Review"/>
             </form>
             </div>
         </div>
-
-        <div class="two">
-        <form action="/register" method="post">
-            {% csrf_token %}
-            {{ registerForm.as_p }}
-            <input type="submit" value="register"/>
-        </form>
-        </div>
-
-        {{authUser}}
-        {{newUser}}
-
-
-
     </body>
